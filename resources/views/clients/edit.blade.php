@@ -1,0 +1,1 @@
+<h2>Cliente seleccionado {{ $id }} </h2>
