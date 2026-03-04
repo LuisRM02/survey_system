@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     input.addEventListener('keyup', function () {
 
-        let documentNumber = this.value;
+        let documentNumber = this.value.trim();
         let documentType = document.getElementById('client_document_type').value;
 
         if (documentNumber.length < 2) {
@@ -96,17 +96,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 suggestions.innerHTML = '';
 
-                data.forEach(client => {
+                if (data.length === 0) {
+                    // No se encontraron clientes → sugerir registrar
+                    let div = document.createElement('div');
+                    div.textContent = "Cliente no encontrado, registrar cliente";
+                    div.style.padding = "5px";
+                    div.style.cursor = "pointer";
+                    div.style.backgroundColor = "#f8d7da";
+                    div.style.color = "#721c24";
+                    div.style.border = "1px solid #f5c6cb";
+                    div.onclick = function () {
+                        // Redirige a la creación de cliente, pasando opcionalmente el tipo y número
+                        let url = `/clients/create?document_type=${documentType}&document_number=${documentNumber}`;
+                        window.location.href = url;
+                    };
+                    suggestions.appendChild(div);
+                    return;
+                }
 
+                data.forEach(client => {
                     let div = document.createElement('div');
                     div.textContent = client.document_number + ' - ' + client.first_name + ' ' + client.last_name;
-
                     div.style.padding = "5px";
                     div.style.cursor = "pointer";
                     div.style.borderBottom = "1px solid #eee";
 
                     div.onclick = function () {
-
                         document.getElementById('client_id').value = client.id;
                         document.getElementById('client_document_number').value = client.document_number;
                         document.getElementById('client_first_name').value = client.first_name;
