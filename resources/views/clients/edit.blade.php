@@ -1,1 +1,3 @@
-<h2>Cliente seleccionado {{ $id }} </h2>
+<h2>Editar cliente </h2>
+
+{{ $client }}

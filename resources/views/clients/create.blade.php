@@ -8,18 +8,10 @@
     @csrf
     <table>
         <tr>
-            <th>Nombres</th>
-            <td><input type="text"required></td>
-        </tr>
-        <tr>
-            <th>Apellidos</th>
-            <td><input type="text"></td>
-        </tr>
-        <tr>
             <th>Tipo de Documento</th>
             <td>
-                <select>
-                    <option>Dni</option>
+                <select name="document_type">
+                    <option selected>Dni</option>
                     <option>Ruc</option>
                     <option>Carnet de Extranjeria</option>
                 </select>
@@ -27,15 +19,24 @@
         </tr>
         <tr>
             <th>Nro de Documento</th>
-            <td><input type="number"></td>
+            <td><input type="text" name="document_number" required></td>
         </tr>
         <tr>
+            <th>Nombres</th>
+            <td><input type="text" name="first_name" required></td>
+        </tr>
+        <tr>
+            <th>Apellidos</th>
+            <td><input type="text" name="last_name" required></td>
+        </tr>
+        
+        <tr>
             <th>Email</th>
-            <td><input type="email"></td>
+            <td><input type="email" name="email" required></td>
         </tr>
         <tr>
             <th>Telefono</th>
-            <td><input type="number"></td>
+            <td><input type="text" name="phone_number" required></td>
         </tr>
     </table>
 

@@ -14,5 +14,7 @@ class Client extends Model
         'email',
         'phone_number'
     ];
+
+    public $timestamps = false;
     
 }

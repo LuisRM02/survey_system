@@ -18,15 +18,15 @@
         <th>Correo</th>
         <th>Acciones</th>
     </tr>
-    <tr>
-        @foreach ($clients as $client)
+    @foreach ($clients as $client)
+        <tr>
             <td>{{ $client->document_number }}</td>
             <td>{{ $client->first_name }}</td>
             <td>{{ $client->last_name }}</td>
             <td>{{ $client->email }}</td>
             <td> 
                 <button 
-                    onclick="window.location.href=`clients/{{$client->id}}`"
+                    onclick="window.location.href='{{ route('clients.edit', $client->id) }}'"
                 >
                     Editar
                 </button>
@@ -36,8 +36,8 @@
                     Eliminar
                 </button>
             </td>
-        @endforeach
-    </tr>
+        </tr>
+    @endforeach
 </table>
 
 
