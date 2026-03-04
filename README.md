@@ -1,69 +1,76 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-# survey_sytem
-=======
->>>>>>> 430e869 (feat: adds models and routes for customer options)
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Survey System - VIP2CARS
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Requisitos del entorno ========================================
 
-## About Laravel
+- PHP >= 8.2
+- MySQL 8 o MariaDB 10+
+- Extensiones PHP: `pdo`, `mbstring`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `bcmath`
+- Composer
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Instalación y configuración ========================================
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Clona el repositorio:
+```bash
+git https://github.com/LuisRM02/survey_system.git
+cd survey_system
 
-## Learning Laravel
+2. Instala dependencias:
+composer install
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+3. Compila las variables de entorno en .env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=survey_system
+DB_USERNAME=root
+DB_PASSWORD=
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+## Puesta en marcha (posterior a crear la Base de Datos y el servicio de MySQL corriendo) ========================================
+1. Ejecuta migraciones 
+php artisan migrate
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+2. Levanta el servidor
+php artisan serve
 
-### Premium Partners
+el proyecto estara disponible en:
+http://127.0.0.1:8000
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+3. Instrucciones generales
+    - Ve a Registrar un vehiculo
+    - Completa los datos del vehiculo
+    - selecciona el tipo de documento del cliente
+    - digita el numero de documento del cliente
+        -el sistema buscara automaticamente clientes que coincidan luego de digitar 2 numeros, si no los encuntra te pedira crearlos. Ojo, el sistema compara tanto el tipo como el numero de documento. Ejem: Si un DNI que empieza con "987.." es buscado pero con el tipo RUC, no lo encontrara.
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Estructura de la BBDD ========================================
+1. Crear BD con el nombre "survey_system":
+    CREATE DATABASE survey_system;
 
-## Code of Conduct
+2. Seleccionar y ejecutar Script de BBDD
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+CREATE TABLE `clients` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `document_type` varchar(140) NOT NULL,
+  `document_number` varchar(12) NOT NULL UNIQUE,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `email` varchar(140) UNIQUE,
+  `phone_number` varchar(9) UNIQUE
+);
 
-## Security Vulnerabilities
+CREATE TABLE `vehicles` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `plate` varchar(6) NOT NULL UNIQUE,
+  `model` varchar(140) NOT NULL,
+  `manufacturing_year` year NOT NULL,
+  `client_id` int NOT NULL
+);
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-<<<<<<< HEAD
-=======
->>>>>>> 8b7cf50 (chore: Initialize Laravel project survey_system)
->>>>>>> 430e869 (feat: adds models and routes for customer options)
+ALTER TABLE `vehicles` 
+ADD CONSTRAINT fk_clients_vehicles
+FOREIGN KEY (`client_id`) 
+REFERENCES `clients` (`id`);
