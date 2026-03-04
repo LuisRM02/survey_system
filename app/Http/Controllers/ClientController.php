@@ -63,4 +63,17 @@ class ClientController extends Controller
         $client->delete();
         return redirect()->route('clients.index');
     }
+
+
+    public function search(Request $request){
+        $documentType = $request->document_type;
+        $documentNumber = $request->document_number;
+
+        $clients = Client::where('document_type', $documentType)
+            ->where('document_number', 'LIKE', $documentNumber . '%')
+            ->limit(10)
+            ->get();
+        
+        return response()->json($clients);
+    }
 }
