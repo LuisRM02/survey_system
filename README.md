@@ -32,6 +32,8 @@ DB_PORT=3306
 DB_DATABASE=survey_system
 DB_USERNAME=root
 DB_PASSWORD=
+
+SESSION_DRIVER=file
 ```
 
 
