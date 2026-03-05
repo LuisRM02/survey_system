@@ -1,6 +1,6 @@
 # Survey System - VIP2CARS
 
-## Requisitos del entorno ========================================
+## Requisitos del entorno
 
 - PHP >= 8.2
 - MySQL 8 o MariaDB 10+
@@ -9,52 +9,64 @@
 
 ---
 
-## Instalación y configuración ========================================
+## Instalación y configuración
 
 1. Clona el repositorio:
-
+```bash
 git https://github.com/LuisRM02/survey_system.git
 
 cd survey_system
+```
 
 2. Instala dependencias:
+```bash
 composer install
+```
 
 3. Compila las variables de entorno en .env
+
+```bash
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=survey_system
 DB_USERNAME=root
 DB_PASSWORD=
+```
 
 
-## Puesta en marcha (posterior a crear la Base de Datos y el servicio de MySQL corriendo) ========================================
+## Puesta en marcha (posterior a crear la Base de Datos y el servicio de MySQL corriendo)
 1. Ejecuta migraciones 
+```bash
 php artisan migrate
+```
 
 2. Levanta el servidor
+```bash
 php artisan serve
+```
 
 el proyecto estara disponible en:
+
 http://127.0.0.1:8000
 
 3. Instrucciones generales
     - Ve a Registrar un vehiculo
     - Completa los datos del vehiculo
-    - selecciona el tipo de documento del cliente
-    - digita el numero de documento del cliente
-        -el sistema buscara automaticamente clientes que coincidan luego de digitar 2 numeros, si no los encuntra te pedira crearlos. Ojo, el sistema compara tanto el tipo como el numero          de documento. Ejem: Si un DNI que empieza con "987.." es buscado pero con el tipo RUC, no lo encontrara.
+    - Selecciona el tipo de documento del cliente
+    - Digita el numero de documento del cliente. El sistema buscara automaticamente clientes que coincidan luego de digitar 2 numeros, si no los encuntra te pedira crearlo. Ojo, el sistema compara tanto el tipo como el numero          de documento. Ejem: Si un DNI que empieza con "987.." es buscado con el tipo RUC, no lo encontrara.
 
 
-## Estructura de la BBDD ========================================
+## Estructura de la BBDD
 <img width="402" height="623" alt="DER_DBDRIAGRAM" src="https://github.com/user-attachments/assets/969f562c-f83a-4e50-8a82-d687a10b4924" />
 
 1. Crear BD con el nombre "survey_system":
-    CREATE DATABASE survey_system;
+```bash
+   CREATE DATABASE survey_system;
+```
 
-2. Seleccionar y ejecutar Script de BBDD
-
+3. Seleccionar y ejecutar Script de BBDD
+```bash
 CREATE TABLE `clients` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `document_type` varchar(140) NOT NULL,
@@ -77,3 +89,4 @@ ALTER TABLE `vehicles`
 ADD CONSTRAINT fk_clients_vehicles
 FOREIGN KEY (`client_id`) 
 REFERENCES `clients` (`id`);
+```
